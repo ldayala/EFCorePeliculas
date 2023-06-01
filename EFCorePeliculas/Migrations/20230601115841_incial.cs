@@ -7,7 +7,7 @@ using NetTopologySuite.Geometries;
 namespace EFCorePeliculas.Migrations
 {
     /// <inheritdoc />
-    public partial class inicial : Migration
+    public partial class incial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -138,6 +138,32 @@ namespace EFCorePeliculas.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PeliculasActores",
+                columns: table => new
+                {
+                    PeliculaId = table.Column<int>(type: "int", nullable: false),
+                    ActorId = table.Column<int>(type: "int", nullable: false),
+                    Personaje = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Orden = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PeliculasActores", x => new { x.PeliculaId, x.ActorId });
+                    table.ForeignKey(
+                        name: "FK_PeliculasActores_Actors_ActorId",
+                        column: x => x.ActorId,
+                        principalTable: "Actors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PeliculasActores_Movies_PeliculaId",
+                        column: x => x.PeliculaId,
+                        principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PeliculaSalaDeCine",
                 columns: table => new
                 {
@@ -173,6 +199,11 @@ namespace EFCorePeliculas.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_PeliculasActores_ActorId",
+                table: "PeliculasActores",
+                column: "ActorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PeliculaSalaDeCine_SalasCinesId",
                 table: "PeliculaSalaDeCine",
                 column: "SalasCinesId");
@@ -187,19 +218,22 @@ namespace EFCorePeliculas.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Actors");
-
-            migrationBuilder.DropTable(
                 name: "GeneroPelicula");
 
             migrationBuilder.DropTable(
                 name: "MovieOffers");
 
             migrationBuilder.DropTable(
+                name: "PeliculasActores");
+
+            migrationBuilder.DropTable(
                 name: "PeliculaSalaDeCine");
 
             migrationBuilder.DropTable(
                 name: "Genders");
+
+            migrationBuilder.DropTable(
+                name: "Actors");
 
             migrationBuilder.DropTable(
                 name: "Movies");
