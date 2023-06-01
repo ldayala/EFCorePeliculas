@@ -23,7 +23,11 @@ namespace EFCorePeliculas
             base.OnModelCreating(modelBuilder);
 
             //modelBuilder.ApplyConfiguration(new GeneroConfig());// importamos la configuracion de GeneroConfig
+
+            //esto hace que se escaneo todo el proyecto y coja las calses que heredan de IEntityTypeConfiguration y las aplica a nuestro api fluente
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());  //importamos toda la configuracion de los config dentro de generoº
+
+
 
             //establecemos la propiedad identificador como llave primaria
            /* modelBuilder.Entity<Genero>().HasKey(p => p.Identificador);  lo tenemos en el archivo de configuracion
@@ -36,12 +40,12 @@ namespace EFCorePeliculas
            
         }
 
-        public DbSet<Genero> Genders { get; set; }
-        public DbSet<Actor> Actors { get; set; }
-        public DbSet<Cine> Cinemas { get; set; }
-        public DbSet <Pelicula> Movies { get;}
-        public DbSet<CineOferta> MovieOffers { get; set; }
-        public DbSet<SalaDeCine> SalasCinemas { get; set; }
+        public DbSet<Genero> Generos { get; set; }
+        public DbSet<Actor> Actores { get; set; }
+        public DbSet<Cine> Cine { get; set; }
+        public DbSet <Pelicula> Peliculas { get;}
+        public DbSet<CineOferta> CineOfertas { get; set; }
+        public DbSet<SalaDeCine> SalasDeCines { get; set; }
         public DbSet<PeliculaActor> PeliculasActores { get; set; }
     }
 
